@@ -5,23 +5,34 @@
 
 using namespace std;
 
-void loop_start(MYSQL* connection, string &input)
+  MYSQL_RES *res; // Дескриптор результирующей таблицы
+  MYSQL_ROW row; // Массив полей текущей строки
+
+void loop_start(MYSQL connection, string &input)
 {
 
-	mysql_options(connection, MYSQL_SET_CHARSET_NAME, "CP1251");
+	mysql_options(&connection, MYSQL_SET_CHARSET_NAME, "CP1251");
 
 	const char* cinput;
+	char* test = "SHOW TABLES";
+
+	mysql_query(&connection, test);
+	res = mysql_store_result(&connection);
+	row = mysql_fetch_row(res);
+	cout << mysql_error(&connection);
+	return;
+
 	while(true)
 	{
-		if (cin >> input && input == "quit" || input == "exit" || input == "leave") return;
+		//if (cin >> input && input == "quit" || input == "exit" || input == "leave") return;
 		cinput = input.c_str();
-		if (mysql_query(connection, cinput) != 0)
+		if (mysql_query(&connection, cinput) != 0)
 		{
 			system("echo '\E[40;31m'");
 			string error_output;
 			error_output = cinput;
-			cout << mysql_error(connection);
-			cout << " DEBUG INFO: #" << mysql_real_query(connection, cinput, strlen(cinput));
+			cout << mysql_error(&connection);
+			cout << " DEBUG INFO: #" << mysql_query(&connection, cinput);
 			cout << " PARSED STRING: " << error_output << '\n';
 			system("echo '\E[40;33m'");
 		}
@@ -38,7 +49,7 @@ const char* ppass;
 
 int main()
 {
-MYSQL conn;
+MYSQL conn; // Дескриптор соединения
 
 if(!mysql_init(&conn))
 	cout << "Error: can't create MySQL-decriptor \n";
@@ -64,16 +75,14 @@ if(!mysql_real_connect(&conn, phost, puser, ppass, pbase, 0, NULL, 0))
 else
 	cout << "Successfully connected!";
 
-MYSQL* marker = &conn;
-
 cout << endl;
 system("echo '\E[40;33m'");
-cout << mysql_stat(marker);
+cout << mysql_stat(&conn);
 cout << endl;
 //system("echo '\033[0m'");
 
 string inp;
 
-loop_start(marker, inp);
+loop_start(conn, inp);
 system("echo '\033[0m'");
 }
