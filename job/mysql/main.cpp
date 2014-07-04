@@ -27,19 +27,23 @@ while(true)
 if (cin >> input && input == "quit" || input == "exit" || input == "leave") return;
 cinput = input.c_str(); // дело во вводе, test выдаёт, но только одно значение таблицы
 
-if (mysql_query(&connection, test) != 0)
+/*if (mysql_query(&connection, test) != 0)
 {
 system("echo '\E[40;31m'");
 string error_output;
 error_output = cinput;
 cout << mysql_error(&connection);
 cout << " DEBUG INFO: #" << mysql_query(&connection, test);
-cout << " PARSED STRING: " << error_output << '\n';
+//cout << " PARSED STRING: " << error_output << '\n';
 system("echo '\E[40;33m'");
-}
-res = mysql_use_result(&connection);
+}*/
+
+mysql_query(&connection, test);
+res = mysql_store_result(&connection);
 row = mysql_fetch_row(res);
-cout << row[0] << " " << row[1];
+unsigned int fields = mysql_num_fields(res);
+unsigned int rows = mysql_num_rows(res);
+cout << row[0] << " " << fields << rows;
 input.clear();
 }
 }
