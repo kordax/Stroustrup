@@ -17,13 +17,13 @@ void loop_start(MYSQL* connection, string &input)
 		cinput = input.c_str();
 		if (mysql_query(connection, cinput) != 0)
 		{
-			system("\E[40;31m");
+			system("echo '\E[40;31m'");
 			string error_output;
 			error_output = cinput;
 			cout << mysql_error(connection);
 			cout << " DEBUG INFO: #" << mysql_real_query(connection, cinput, strlen(cinput));
-			cout << "PARSED STRING: " << error_output << '\n';
-			system("\E[40;33m");
+			cout << " PARSED STRING: " << error_output << '\n';
+			system("echo '\E[40;33m'");
 		}
 		input.clear();
 	}
