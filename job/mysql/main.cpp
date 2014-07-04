@@ -16,26 +16,30 @@ mysql_options(&connection, MYSQL_SET_CHARSET_NAME, "CP1251");
 const char* cinput;
 char* test = "SHOW TABLES";
 
-mysql_query(&connection, test);
+/*mysql_query(&connection, test);
 res = mysql_store_result(&connection);
 row = mysql_fetch_row(res);
-cout << mysql_error(&connection);
+cout << row[0];
 return;
-
+*/
 while(true)
 {
-//if (cin >> input && input == "quit" || input == "exit" || input == "leave") return;
-cinput = input.c_str();
-if (mysql_query(&connection, cinput) != 0)
+if (cin >> input && input == "quit" || input == "exit" || input == "leave") return;
+cinput = input.c_str(); // дело во вводе, test выдаёт, но только одно значение таблицы
+
+if (mysql_query(&connection, test) != 0)
 {
 system("echo '\E[40;31m'");
 string error_output;
 error_output = cinput;
 cout << mysql_error(&connection);
-cout << " DEBUG INFO: #" << mysql_query(&connection, cinput);
+cout << " DEBUG INFO: #" << mysql_query(&connection, test);
 cout << " PARSED STRING: " << error_output << '\n';
 system("echo '\E[40;33m'");
 }
+res = mysql_use_result(&connection);
+row = mysql_fetch_row(res);
+cout << row[0] << " " << row[1];
 input.clear();
 }
 }
