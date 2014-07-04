@@ -12,13 +12,13 @@ MAKEFILE      = Makefile
 
 CC            = gcc
 CXX           = g++
-DEFINES       = -DQT_CORE_LIB
+DEFINES       = -DQT_SQL_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
 CXXFLAGS      = -pipe -g -Wall -W -D_REENTRANT -fPIE $(DEFINES)
-INCPATH       = -I../../../../Qt/5.3/gcc_64/mkspecs/linux-g++ -I../../0_1a -I../../../../Qt/5.3/gcc_64/include -I../../../../Qt/5.3/gcc_64/include/QtCore -I. -I.
+INCPATH       = -I../../../../Qt/5.3/gcc_64/mkspecs/linux-g++ -I../../0_1a -I../../../../Qt/5.3/gcc_64/include -I../../../../Qt/5.3/gcc_64/include/QtSql -I../../../../Qt/5.3/gcc_64/include/QtCore -I. -I.
 LINK          = g++
 LFLAGS        = -Wl,-rpath,/home/kordax/Qt/5.3/gcc_64 -Wl,-rpath,/home/kordax/Qt/5.3/gcc_64/lib
-LIBS          = $(SUBLIBS) -L/home/kordax/Qt/5.3/gcc_64/lib -lQt5Core -lpthread 
+LIBS          = $(SUBLIBS) -L/home/kordax/Qt/5.3/gcc_64/lib -lQt5Sql -lQt5Core -lpthread 
 AR            = ar cqs
 RANLIB        = 
 QMAKE         = /home/kordax/Qt/5.3/gcc_64/bin/qmake
@@ -291,6 +291,7 @@ Makefile: ../../0_1a/0_1a.pro ../../../../Qt/5.3/gcc_64/mkspecs/features/spec_pr
 		../../../../Qt/5.3/gcc_64/mkspecs/features/yacc.prf \
 		../../../../Qt/5.3/gcc_64/mkspecs/features/lex.prf \
 		../../0_1a/0_1a.pro \
+		/home/kordax/Qt/5.3/gcc_64/lib/libQt5Sql.prl \
 		/home/kordax/Qt/5.3/gcc_64/lib/libQt5Core.prl
 	$(QMAKE) -spec linux-g++ CONFIG+=debug -o Makefile ../../0_1a/0_1a.pro
 ../../../../Qt/5.3/gcc_64/mkspecs/features/spec_pre.prf:
@@ -399,6 +400,7 @@ Makefile: ../../0_1a/0_1a.pro ../../../../Qt/5.3/gcc_64/mkspecs/features/spec_pr
 ../../../../Qt/5.3/gcc_64/mkspecs/features/yacc.prf:
 ../../../../Qt/5.3/gcc_64/mkspecs/features/lex.prf:
 ../../0_1a/0_1a.pro:
+/home/kordax/Qt/5.3/gcc_64/lib/libQt5Sql.prl:
 /home/kordax/Qt/5.3/gcc_64/lib/libQt5Core.prl:
 qmake: FORCE
 	@$(QMAKE) -spec linux-g++ CONFIG+=debug -o Makefile ../../0_1a/0_1a.pro
@@ -444,7 +446,46 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../../0_1a/main.cpp 
+main.o: ../../0_1a/main.cpp ../../../../Qt/5.3/gcc_64/include/QtSql \
+		../../../../Qt/5.3/gcc_64/include/QtSql/QSqlQuery \
+		../../../../Qt/5.3/gcc_64/include/QtSql/qsqlquery.h \
+		../../../../Qt/5.3/gcc_64/include/QtSql/qsql.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qglobal.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qconfig.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qfeatures.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qsystemdetection.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qprocessordetection.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qcompilerdetection.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qtypeinfo.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qtypetraits.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qsysinfo.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qlogging.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qflags.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qbasicatomic.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qgenericatomic.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_msvc.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_armv7.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_armv6.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_armv5.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_ia64.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_mips.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_x86.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_cxx11.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_gcc.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qatomic_unix.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qglobalstatic.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qmutex.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qnumeric.h \
+		../../../../Qt/5.3/gcc_64/include/QtSql/qsqldatabase.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qstring.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qchar.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qbytearray.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qrefcount.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qnamespace.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qarraydata.h \
+		../../../../Qt/5.3/gcc_64/include/QtCore/qstringbuilder.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../0_1a/main.cpp
 
 ####### Install
