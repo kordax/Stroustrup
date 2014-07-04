@@ -8,7 +8,7 @@ using namespace std;
   MYSQL_RES *res; // Дескриптор результирующей таблицы
   MYSQL_ROW row; // Массив полей текущей строки
 
-void loop_start(MYSQL connection, string &input)
+void loop_start(MYSQL &connection, string &input)
 {
 
 	mysql_options(&connection, MYSQL_SET_CHARSET_NAME, "CP1251");
@@ -16,10 +16,11 @@ void loop_start(MYSQL connection, string &input)
 	const char* cinput;
 	char* test = "SHOW TABLES";
 
-	mysql_query(&connection, test);
-	res = mysql_store_result(&connection);
-	row = mysql_fetch_row(res);
+	&res = mysql_query(&connection, test);
+	mysql_num_rows(&res));
+	row = mysql_fetch_array(&res);
 	cout << mysql_error(&connection);
+	cout << endl << &row[0];
 	return;
 
 	while(true)
