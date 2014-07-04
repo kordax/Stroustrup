@@ -1,5 +1,6 @@
 #include <iostream>
 #include <QtSql>
+//#include <qt5/QtSql/qsql_mysql.h>
 #include <QtSql/QSqlQuery>
 #include <string.h>
 
@@ -7,7 +8,7 @@ using namespace std;
 
 int main()
 {
-    QSqlDatabase db = QSqlDatabase::addDatabase("mydb");
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setHostName("stack.beget.ru");
     db.setDatabaseName("dremor_wp");
     db.setUserName("dremor_wp");
