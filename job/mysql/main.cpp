@@ -5,6 +5,21 @@
 
 using namespace std;
 
+void main_loop(MYSQL* connection, string &input)
+{
+	const char* cinput;
+	while(true)
+	{
+		if (cin >> input && input == "quit" || input == "exit" || input == "leave");
+		cinput = input.c_str();
+		if (mysql_query(connection, cinput) != 0)
+		{
+			cout << "ERROR" << endl;
+		}
+		input.clear();
+	}
+}
+
 string host, user, base, pass;
 
 const char* phost;
@@ -39,6 +54,14 @@ else
 MYSQL* marker = &conn;
 
 cout << endl;
+system("echo '\E[40;33m'");
 cout << mysql_stat(marker);
 cout << endl;
+//system("echo '\033[0m'");
+
+string inp;
+const char* cinp;
+
+void main_loop();
+
 }
