@@ -20,13 +20,15 @@ auto_ptr<T>::~auto_ptr() throw()
     delete inner_pointer;
 }
 
-
 using namespace std;
 
 int main()
 {
-    auto_ptr< vector<int> > p(new vector<int>);
-    p->at(5) = 3;
+    auto_ptr< vector<int> > p1(new vector<int> (7));
+    auto_ptr< vector<int> > p2(new vector<int> (3));
+    p1->at(5) = 3; // Правильное поведение
+    cout << (*p1).at(5);
+    p2->at(5) = 3; // Exception
     cout << "Hello World!" << endl;
     return 0;
 }
