@@ -1,0 +1,40 @@
+// accu/counted_ptr.hpp
+#ifndef ACCU_COUNTED_PTR_INCLUDED
+#define ACCU_COUNTED_PTR_INCLUDED
+
+namespace accu
+{
+    template<typename type>
+    class counted_ptr
+    {
+    public: // create/copy/destroy
+
+        counted_ptr(type * other);
+        counted_ptr(const counted_ptr & other);
+        counted_ptr & operator=(const counted_ptr & rhs);
+        ~counted_ptr();
+
+    public: // access
+
+        type * operator->() const;
+        type & operator*() const;
+        type * raw() const throw();
+
+    private: // precondition for -> and *
+
+        void check_not_null_ptr() const;
+
+    private: // plumbing
+
+        void increment() const;
+        void decrement() const;
+
+    private: // state
+
+        type * ptr;
+        int * count;
+    };
+}
+
+//include-all compilation model
+#include "accu/counted_ptr-template.hpp"

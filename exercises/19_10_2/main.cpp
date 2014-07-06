@@ -5,10 +5,11 @@ template <class T>
 class auto_ptr {
 private:
     T* inner_pointer;
-    T* release();
 public:
     explicit auto_ptr(T* reference = 0) throw() :inner_pointer(reference) {}
     ~auto_ptr() throw();
+
+    T* release();
 
     T* operator -> () { return inner_pointer; }
     T& operator * () { return *inner_pointer; }
@@ -18,6 +19,14 @@ template <class T>
 auto_ptr<T>::~auto_ptr() throw()
 {
     delete inner_pointer;
+}
+
+template <class T>
+T* auto_ptr<T>::release()
+{
+    T* temp = this->inner_pointer;
+    this->inner_pointer = NULL;
+    return temp;
 }
 
 using namespace std;
@@ -31,4 +40,3 @@ int main()
     p2->at(5) = 3; // Exception
     return 0;
 }
-
