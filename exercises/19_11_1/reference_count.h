@@ -14,7 +14,8 @@ public: // create/copy/destroy
 
 private:
 
-    void increment() { *counter++;}
+    void increment() { *counter++; }
+    void decrement() { --*counter; }
 
     int* counter;
 };
