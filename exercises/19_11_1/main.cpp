@@ -1,16 +1,12 @@
 #include <iostream>
+#include <counted_ptr.h>
 
 template <class T>
-class counted_ptr{
-public:
+counted_ptr<T>::counted_ptr(T* object_pointer = NULL)
+{
+    inner_pointer = object_pointer;
 
-    counted_ptr(T* object);
-
-private:
-
-    T* pointer;
-    int counter;
-};
+}
 
 using namespace std;
 
