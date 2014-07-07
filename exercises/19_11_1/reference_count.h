@@ -32,3 +32,9 @@ reference_count::reference_count(const reference_count& obj_to_copy)
 {
     increment();
 }
+
+reference_count::~reference_count()
+{
+    decrement();
+}
+

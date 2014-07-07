@@ -35,7 +35,7 @@ void allocat<T>::deallocate(T* p, int n)
 template<class T>
 void allocat<T>::construct(T* p, const T& v)
 {
-    new (p) T(v);
+    new (p) T(v); //
 }
 
 template<class T>
