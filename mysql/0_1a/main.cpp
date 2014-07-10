@@ -2,13 +2,8 @@
 #include <QtSql>
 #include <QtSql/QSqlQuery>
 #include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <QtDebug>
 
 using namespace std;
-
-int conn_01 = socket(AF_INET, SOCK_STREAM, 1);
 
 int main()
 {
@@ -23,8 +18,5 @@ int main()
     if (ok)
     {
         cout << "ok" << endl;
-        cout << AF_INET << endl << SOCK_STREAM << endl;
     }
-
-
 }
