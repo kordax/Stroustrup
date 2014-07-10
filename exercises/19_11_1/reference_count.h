@@ -37,4 +37,3 @@ reference_count::~reference_count()
 {
     decrement();
 }
-
