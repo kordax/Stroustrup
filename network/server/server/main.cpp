@@ -1,4 +1,4 @@
-//SERVER
+// SERVER
 
 #include <iostream>
 #include <QtSql>
@@ -6,7 +6,6 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include <QtDebug>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
