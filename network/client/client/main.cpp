@@ -14,42 +14,40 @@ char buf[sizeof(message)];
 
 using namespace std;
 
+struct token_stream
+{
+public:
+    string type;
+    char elem;
+};
+
 namespace kordax
 {
 
-string readline()
+int parse_input(string& input)
 {
-    string str;
-    char ch;
-    while(ch)
-    {
-        std::cin >> ch;
-        if(! isdigit(ch))
-        {
-            cout << "Error, forbidden symbols!";
-            return NULL;
-        }
-        else str += ch;
-    }
 
-    return str;
-}
 }
 
-int authorization(string& username, string& password)
+}
+void authorization(string& username, string& password)
 {
     std::cout << "Enter your nickname: ";
-    username = kordax::readline();
+    //username = kordax::readline();
     std::cout << endl;
     std::cout << "Enter your password: ";
-    username = kordax::readline();
+    //username = kordax::readline();
     std::cout << endl;
 
-    return 0;
+    return;
 }
 
 int main()
 {
+    string username, password;
+
+    authorization(username, password);
+
     int sock;
     struct sockaddr_in addr;
 
