@@ -14,22 +14,38 @@ char buf[sizeof(message)];
 
 using namespace std;
 
-struct token_stream
-{
-public:
-    string type;
-    char elem;
-};
+//==========================
 
 namespace kordax
 {
 
+struct token
+{
+private:
+    string type;
+    char* elem[];
+
+public:
+    istream& operator>> (const string&);
+    ostream& operator<< (const string&);
+};
+
 int parse_input(string& input)
 {
-
+    char ch;
+    cin >> ch;
+    //if (isdigit)
 }
 
 }
+
+istream& kordax::token::operator>> (const string& input)
+{
+    for (int i = 0; i < input.size(); ++i) *elem[i] = input[i];
+}
+
+//==========================
+
 void authorization(string& username, string& password)
 {
     std::cout << "Enter your nickname: ";
