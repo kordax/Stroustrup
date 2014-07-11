@@ -1,3 +1,5 @@
+//SERVER
+
 #include <iostream>
 #include <QtSql>
 #include <QtSql/QSqlQuery>
