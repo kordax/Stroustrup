@@ -1,11 +1,9 @@
 // CLIENT
 
+#include <string.h>
 #include <iostream>
 #include <QtSql>
 #include <QtSql/QSqlQuery>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -13,6 +11,42 @@
 
 char message[] = "Hello there!\n";
 char buf[sizeof(message)];
+
+using namespace std;
+
+namespace kordax
+{
+
+string readline()
+{
+    string str;
+    char ch;
+    while(ch)
+    {
+        std::cin >> ch;
+        if(! isdigit(ch))
+        {
+            cout << "Error, forbidden symbols!";
+            return NULL;
+        }
+        else str += ch;
+    }
+
+    return str;
+}
+}
+
+int authorization(string& username, string& password)
+{
+    std::cout << "Enter your nickname: ";
+    username = kordax::readline();
+    std::cout << endl;
+    std::cout << "Enter your password: ";
+    username = kordax::readline();
+    std::cout << endl;
+
+    return 0;
+}
 
 int main()
 {

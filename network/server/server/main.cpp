@@ -1,11 +1,9 @@
 // SERVER
 
+#include <string.h>
 #include <iostream>
 #include <QtSql>
 #include <QtSql/QSqlQuery>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -49,6 +47,7 @@ int main()
         {
             bytes_read = recv(sock, buf, 1024, 0);
             if(bytes_read <= 0) break;
+            std::cout << buf;
             send(sock, buf, bytes_read, 0);
         }
 
