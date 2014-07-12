@@ -420,7 +420,8 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../../19_11_1/main.cpp 
+main.o: ../../19_11_1/main.cpp ../../19_11_1/counted_ptr.h \
+		../../19_11_1/reference_count.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../19_11_1/main.cpp
 
 ####### Install

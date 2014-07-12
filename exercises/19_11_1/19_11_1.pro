@@ -6,7 +6,8 @@ CONFIG -= qt
 SOURCES += main.cpp
 
 OTHER_FILES += \
-    counted_ptr.txt
+    counted_ptr.txt \
+    test_ptr.txt
 
 HEADERS += \
     reference_count.h \
