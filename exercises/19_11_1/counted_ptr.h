@@ -11,10 +11,12 @@ class counted_ptr
 {
 public: // create/copy/destroy
 
-    counted_ptr();
-    counted_ptr(T*, reference_count*);
-    explicit counted_ptr(const counted_ptr& obj_to_copy); // copy constructor
+    //counted_ptr();
+    counted_ptr(T* ptr = 0, reference_count* ref_cnt = new reference_count())
+        :in_ptr(ptr), counter(ref_cnt) {}
+    counted_ptr(const counted_ptr& obj_to_copy); // copy constructor
     counted_ptr& operator=(const counted_ptr& obj_to_copy);
+    counted_ptr& operator=(const T& obj);
     ~counted_ptr();
 
 public: // access
@@ -29,9 +31,11 @@ private: // pointers
 
     T* in_ptr;
     reference_count* counter;
+
 };
 
 template <class T>
-counted_ptr<T>::counted_ptr(T* ptr = 0, reference_count* ref_cnt = new reference_count())
-    :in_ptr(ptr), counter(ref_cnt)
-{}
+counted_ptr<T>& counted_ptr<T>::operator=(const T& obj)
+{
+    in_ptr = obj;
+}
