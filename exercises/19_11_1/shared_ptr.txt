@@ -1,0 +1,129 @@
+#include <cstddef>
+#include <cassert>
+
+
+struct object {
+
+   explicit object(int const data) : data(data) {
+      ++count;
+   }
+
+   ~object() {
+      --count;
+   }
+
+   int data;
+
+   static std::size_t count;
+};
+
+std::size_t object::count = 0;
+
+
+struct shared_ptr {
+
+   object * get() const {
+      if (stored) {
+         return stored->ptr;
+      }
+      return 0;
+   }
+
+   std::size_t count() const {
+      if (stored) {
+         return stored->count;
+      }
+      return 0;
+   }
+
+   bool empty() const {
+      return !get();
+   }
+
+   object & operator *() const {
+      assert(get());
+      return *get();
+   }
+
+   object * operator ->() const {
+      assert(stored);
+      return stored->ptr;
+   }
+
+
+   shared_ptr() : stored(0) {}
+
+   explicit shared_ptr(object * const ptr) : stored(new storage(ptr)) {}
+
+   shared_ptr(shared_ptr const& other) : stored(other.stored) {
+      increment();
+   }
+
+   shared_ptr & operator =(shared_ptr const& other) {
+      if (stored != other.stored) {
+         decrement();
+         stored = other.stored;
+         increment();
+      }
+      return *this;
+   }
+
+   ~shared_ptr() {
+      decrement();
+   }
+
+
+private:
+   void increment() {
+      if (stored) {
+         ++stored->count;
+      }
+   }
+
+   void decrement() {
+      if (stored && (--stored->count == 0)) {
+         delete stored->ptr;
+         delete stored;
+         stored = 0;
+      }
+   }
+
+
+   struct storage {
+
+      explicit storage(object * const ptr) : ptr(ptr), count(1) {}
+
+      object * const ptr;
+      std::size_t    count;
+   };
+
+   storage * stored;
+};
+
+
+int main() {
+   {
+      shared_ptr ptr(new object(42));
+      assert(ptr.count() == 1);
+      assert(ptr->data == 42);
+
+      shared_ptr copy(ptr);
+      assert(copy.count() == 2);
+      assert(copy->data == 42);
+
+      shared_ptr empty;
+      assert(empty.empty());
+
+      empty = copy;
+      assert(empty.count() == 3);
+      assert(empty->data == 42);
+
+      empty = shared_ptr();
+      assert(empty.empty());
+
+      shared_ptr emptyCopy(empty);
+      assert(emptyCopy.empty());
+   }
+
+   assert(object::count == 0);
+}
