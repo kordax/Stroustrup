@@ -60,22 +60,23 @@ void authorization(string& username, string& password)
     std::cout << "Enter your password: ";
     cin >> password;
     if (!kordax::parse_input) cout << "Wrong symbols in username!" << endl;
-    //username = kordax::readline();
     std::cout << endl;
 
     return;
 }
 
-void main_loop(int socket)
+void main_loop(const int& socket)
 {
-    char message[] = "test";
-    char buffer[sizeof(message)];
+    char message[5];
+    while(1)
+    {
+        cout << ':';
+        cin >> message;
+        char buffer[sizeof(message)];
 
-    cout << ':';
-    cin >> message;
-
-    send(socket, message, sizeof(message), 0);
-    recv(socket, buffer, sizeof(message), 0);
+        send(socket, message, sizeof(message), 0);
+        recv(socket, buffer, sizeof(message), 0);
+    }
 }
 
 int main()
@@ -95,17 +96,18 @@ int main()
     }
 
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(3425); // или любой другой порт...
+    addr.sin_port = htons(3423); // или любой другой порт...
     addr.sin_addr.s_addr = htonl(INADDR_LOOPBACK);
     if(connect(sock, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
         perror("connect");
         exit(2);
     }
-
+    else
+    {
     cout << "Succesfully connected to server!" << endl;
     cout << "Now eat shit, faggot and type your stuff!" << endl;
-
+    }
     main_loop(sock);
 
     //printf(buf);

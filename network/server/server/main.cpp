@@ -13,7 +13,7 @@ int main()
 {
     int sock, listener;
     struct sockaddr_in addr;
-    char buf[1024];
+    char message[5];
     int bytes_read;
 
     listener = socket(AF_INET, SOCK_STREAM, 0);
@@ -24,7 +24,7 @@ int main()
     }
 
     addr.sin_family = AF_INET;
-    addr.sin_port = htons(3425);
+    addr.sin_port = htons(3423);
     addr.sin_addr.s_addr = htonl(INADDR_ANY);
     if(bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
@@ -45,10 +45,10 @@ int main()
 
         while(1)
         {
-            bytes_read = recv(sock, buf, 1024, 0);
+            bytes_read = recv(sock, message, 5, 0);
             if(bytes_read <= 0) break;
-            std::cout << buf;
-            send(sock, buf, bytes_read, 0);
+            std::cout << message;
+            //send(sock, message, bytes_read, 0);
         }
 
         close(sock);
