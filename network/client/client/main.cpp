@@ -9,9 +9,6 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
-char message[] = "Hello there!\n";
-char buf[sizeof(message)];
-
 using namespace std;
 
 //==========================
@@ -26,8 +23,8 @@ private:
     char* elem[];
 
 public:
-    istream& operator>> (const string&);
-    ostream& operator<< (const string&);
+    istream& operator>> (istream& is);
+    ostream& operator<< (ostream& os);
 };
 
 bool parse_input(const string& input)
@@ -39,9 +36,17 @@ bool parse_input(const string& input)
 
 }
 
-istream& kordax::token::operator>> (const string& input)
+istream& kordax::token::operator>> (istream& is)
 {
-    for (int i = 0; i < input.size(); ++i) *elem[i] = input[i];
+    char ch;
+    int cnt = 0;
+    while (is)
+    {
+        is >> ch;
+        this->type[cnt] = ch;
+        cnt++;
+    }
+    return is;
 }
 
 //==========================
@@ -85,6 +90,9 @@ int main()
         perror("connect");
         exit(2);
     }
+
+    cout << "Succesfully connected to server!" << endl;
+    cout << "Now eat shit, faggot and type your stuff!" << endl;
 
     send(sock, message, sizeof(message), 0);
     recv(sock, buf, sizeof(message), 0);
