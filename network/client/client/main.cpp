@@ -66,11 +66,16 @@ void authorization(string& username, string& password)
     return;
 }
 
-void main_loop()
+void main_loop(int socket)
 {
-    string input;
+    char message[] = "test";
+    char buffer[sizeof(message)];
+
     cout << ':';
-    cin >> input;
+    cin >> message;
+
+    send(socket, message, sizeof(message), 0);
+    recv(socket, buffer, sizeof(message), 0);
 }
 
 int main()
@@ -101,13 +106,9 @@ int main()
     cout << "Succesfully connected to server!" << endl;
     cout << "Now eat shit, faggot and type your stuff!" << endl;
 
-    char message[] = "test";
-    char buf[1024];
+    main_loop(sock);
 
-    send(sock, message, sizeof(message), 0);
-    recv(sock, buf, sizeof(message), 0);
-
-    printf(buf);
+    //printf(buf);
     close(sock);
 
     return 0;
