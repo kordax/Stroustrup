@@ -30,11 +30,11 @@ public:
     ostream& operator<< (const string&);
 };
 
-int parse_input(string& input)
+bool parse_input(const string& input)
 {
-    char ch;
-    cin >> ch;
-    //if (isdigit)
+    for (int i = 0; i < input.size(); ++i)
+        if (!isdigit(input[i]) && !isalpha(input[i])) return false;
+    return true;
 }
 
 }
@@ -49,9 +49,12 @@ istream& kordax::token::operator>> (const string& input)
 void authorization(string& username, string& password)
 {
     std::cout << "Enter your nickname: ";
-    //username = kordax::readline();
+    cin >> username;
+    if (!kordax::parse_input(username)) cout << "Wrong symbols in username!" << endl;
     std::cout << endl;
     std::cout << "Enter your password: ";
+    cin >> password;
+    if (!kordax::parse_input) cout << "Wrong symbols in username!" << endl;
     //username = kordax::readline();
     std::cout << endl;
 
