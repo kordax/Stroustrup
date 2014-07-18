@@ -66,6 +66,13 @@ void authorization(string& username, string& password)
     return;
 }
 
+void main_loop()
+{
+    string input;
+    cout << ':';
+    cin >> input;
+}
+
 int main()
 {
     string username, password;
@@ -93,6 +100,9 @@ int main()
 
     cout << "Succesfully connected to server!" << endl;
     cout << "Now eat shit, faggot and type your stuff!" << endl;
+
+    char message[] = "test";
+    char buf[1024];
 
     send(sock, message, sizeof(message), 0);
     recv(sock, buf, sizeof(message), 0);
