@@ -14,9 +14,9 @@ public: // create/copy/destroy
     //counted_ptr();
     counted_ptr(T* ptr = 0, reference_count* ref_cnt = new reference_count())
         :in_ptr(ptr), counter(ref_cnt) {}
-    counted_ptr(const counted_ptr& obj_to_copy); // copy constructor
-    counted_ptr& operator=(const counted_ptr& obj_to_copy);
-    counted_ptr& operator=(const T& obj);
+    counted_ptr(const counted_ptr&); // copy constructor
+    counted_ptr& operator=(const counted_ptr&);
+    counted_ptr& operator=(const T&);
     ~counted_ptr();
 
 public: // access
@@ -33,6 +33,13 @@ private: // pointers
     reference_count* counter;
 
 };
+
+template <class T>
+counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
+{
+    if (this != &obj) // Проверяем адрес?!
+    in_ptr = obj;
+}
 
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const T& obj)
