@@ -35,6 +35,13 @@ private: // pointers
 };
 
 template <class T>
+counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
+{
+    if (this != &obj) // Проверяем адрес?!
+    in_ptr = obj;
+}
+
+template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const T& obj)
 {
     in_ptr = obj;
