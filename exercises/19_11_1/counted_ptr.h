@@ -47,7 +47,7 @@ counted_ptr<T>::counted_ptr(const counted_ptr& obj)
     {
         in_ptr = obj.in_ptr;
         counter = obj.counter;
-        counter->counter++; // Увеличиваем значение счётчика
+        counter->increment(); // Увеличиваем значение счётчика
     }
 }
 
@@ -72,7 +72,7 @@ counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
     {
         in_ptr = obj.in_ptr;
         counter = obj.counter;
-        *counter++; // Увеличиваем значение счётчика
+        counter->increment(); // Увеличиваем значение счётчика
     }
     return *this;
 }
