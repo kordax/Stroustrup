@@ -46,7 +46,7 @@ counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
         in_ptr = obj.in_ptr;
     }
 
-    in_ptr = obj;
+    return *this;
 }
 
 template <class T>
