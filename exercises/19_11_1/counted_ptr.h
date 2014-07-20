@@ -17,6 +17,8 @@ public: // create/copy/destroy
     counted_ptr(const counted_ptr&); // copy constructor
     counted_ptr& operator=(const counted_ptr&);
     counted_ptr& operator=(const T&);
+    counted_ptr& operator==(const T&);
+    counted_ptr& operator==(const counted_ptr&);
     ~counted_ptr();
 
 public: // access
@@ -33,6 +35,21 @@ private: // pointers
     reference_count* counter;
 
 };
+
+
+template <class T>
+counted_ptr<T>& counted_ptr<T>::operator ==(const T& obj)
+{
+    if (in_ptr == obj) return true;
+    return false;
+}
+
+template <class T>
+counted_ptr<T>& counted_ptr<T>::operator ==(const counted_ptr& obj)
+{
+    if (in_ptr == obj.in_ptr) return true;
+    return false;
+}
 
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
@@ -53,4 +70,13 @@ template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const T& obj)
 {
     in_ptr = obj;
+}
+
+template <class T>
+counted_ptr<T>::~counted_ptr()
+{
+    if (in_ptr != 0)
+    {
+        delete in_ptr;
+    }
 }
