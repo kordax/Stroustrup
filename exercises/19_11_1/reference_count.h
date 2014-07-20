@@ -10,14 +10,17 @@ public: // create/copy/destroy
     reference_count();
     reference_count(const reference_count&);
     reference_count& operator=(const reference_count&);
-    ~reference_count();
+    virtual ~reference_count();
+
+    int* counter;
 
 public:
 
-    void increment() { *counter++; }
+    void increment()
+    {
+        *counter++;
+    }
     void decrement() { --*counter; }
-
-    int* counter;
 };
 
 reference_count::reference_count()
@@ -36,4 +39,9 @@ reference_count::reference_count(const reference_count& obj_to_copy)
 reference_count::~reference_count()
 {
     decrement();
+}
+
+reference_count& reference_count::operator=(const reference_count& obj)
+{
+    return *this;
 }

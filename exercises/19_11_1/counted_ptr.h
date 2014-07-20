@@ -47,7 +47,7 @@ counted_ptr<T>::counted_ptr(const counted_ptr& obj)
     {
         in_ptr = obj.in_ptr;
         counter = obj.counter;
-        counter->increment(); // Увеличиваем значение счётчика
+        counter->counter++; // Увеличиваем значение счётчика
     }
 }
 
@@ -98,9 +98,13 @@ counted_ptr<T>& counted_ptr<T>::operator=(const T& obj)
 template <class T>
 counted_ptr<T>::~counted_ptr()
 {
-    if (in_ptr != 0)
+    if (*in_ptr != NULL)
     {
         delete in_ptr;
+    }
+    if (*counter->counter != NULL)
+    {
+        delete counter;
     }
 }
 
