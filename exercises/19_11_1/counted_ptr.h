@@ -38,7 +38,15 @@ template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
 {
     if (this != &obj) // Проверяем адрес?!
-    in_ptr = obj;
+    {
+        if (in_ptr != 0)
+        {
+            delete in_ptr;
+        }
+        in_ptr = obj.in_ptr;
+    }
+
+    return *this;
 }
 
 template <class T>
