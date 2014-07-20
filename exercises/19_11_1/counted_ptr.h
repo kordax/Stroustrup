@@ -31,7 +31,7 @@ public: // access
 
 private: // check_null
 
-void check_not_null_ptr() const;
+void is_null() const;
 
 private: // pointers
 
@@ -63,30 +63,14 @@ counted_ptr<T>& counted_ptr<T>::operator ==(const counted_ptr& obj)
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
 {
-    if (this != &obj) // Проверяем адрес?!
-    {
-        if (in_ptr != 0)
-        {
-            delete in_ptr;
-        }
-        in_ptr = obj.in_ptr;
-    }
-
+    if (obj.in_ptr != 0)in_ptr = obj.in_ptr;
     return *this;
 }
 
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(counted_ptr<T>& obj)
 {
-    if (this != &obj) // Проверяем адрес?!
-    {
-        if (in_ptr != 0)
-        {
-            delete in_ptr;
-        }
-        in_ptr = obj.in_ptr;
-    }
-
+    if (obj.in_ptr != 0)in_ptr = obj.in_ptr;
     return *this;
 }
 
@@ -108,5 +92,5 @@ counted_ptr<T>::~counted_ptr()
 template <class T>
 T& counted_ptr<T>::operator ->()
 {
-    return in_ptr;
+    return *in_ptr;
 }
