@@ -15,10 +15,13 @@ public: // create/copy/destroy
     counted_ptr(T* ptr = 0, reference_count* ref_cnt = new reference_count())
         :in_ptr(ptr), counter(ref_cnt) {}
     counted_ptr(const counted_ptr&); // copy constructor
+
+    counted_ptr& operator=(counted_ptr&);
     counted_ptr& operator=(const counted_ptr&);
     counted_ptr& operator=(const T&);
     counted_ptr& operator==(const T&);
     counted_ptr& operator==(const counted_ptr&);
+
     ~counted_ptr();
 
 public: // access
@@ -36,6 +39,11 @@ private: // pointers
 
 };
 
+template <class T>
+counted_ptr<T>::counted_ptr(const counted_ptr& obj)
+{
+    this->in_ptr = new T(*obj.in_ptr); //Внутренний указатель равняется новому объекту типа Т со значением obj.in_ptr
+}
 
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator ==(const T& obj)
@@ -53,6 +61,21 @@ counted_ptr<T>& counted_ptr<T>::operator ==(const counted_ptr& obj)
 
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
+{
+    if (this != &obj) // Проверяем адрес?!
+    {
+        if (in_ptr != 0)
+        {
+            delete in_ptr;
+        }
+        in_ptr = obj.in_ptr;
+    }
+
+    return *this;
+}
+
+template <class T>
+counted_ptr<T>& counted_ptr<T>::operator=(counted_ptr<T>& obj)
 {
     if (this != &obj) // Проверяем адрес?!
     {
