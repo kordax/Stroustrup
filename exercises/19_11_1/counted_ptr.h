@@ -33,7 +33,7 @@ private: // check_null
 
 void is_null() const;
 
-private: // pointers
+public: // pointers
 
     T* in_ptr;
     reference_count* counter;
@@ -43,7 +43,12 @@ private: // pointers
 template <class T>
 counted_ptr<T>::counted_ptr(const counted_ptr& obj)
 {
-    this->in_ptr = new T(*obj.in_ptr); //Внутренний указатель равняется новому объекту типа Т со значением obj.in_ptr
+    if (this != &obj)
+    {
+        in_ptr = obj.in_ptr;
+        counter = obj.counter;
+        counter->increment(); // Увеличиваем значение счётчика
+    }
 }
 
 template <class T>
@@ -63,14 +68,24 @@ counted_ptr<T>& counted_ptr<T>::operator ==(const counted_ptr& obj)
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(const counted_ptr& obj)
 {
-    if (obj.in_ptr != 0)in_ptr = obj.in_ptr;
+    if (this != &obj)
+    {
+        in_ptr = obj.in_ptr;
+        counter = obj.counter;
+        *counter++; // Увеличиваем значение счётчика
+    }
     return *this;
 }
 
 template <class T>
 counted_ptr<T>& counted_ptr<T>::operator=(counted_ptr<T>& obj)
 {
-    if (obj.in_ptr != 0)in_ptr = obj.in_ptr;
+    if (this != &obj)
+    {
+        in_ptr = obj.in_ptr;
+        counter = obj.counter;
+        *counter++; // Увеличиваем значение счётчика
+    }
     return *this;
 }
 

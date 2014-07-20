@@ -12,7 +12,7 @@ public: // create/copy/destroy
     reference_count& operator=(const reference_count&);
     ~reference_count();
 
-private:
+public:
 
     void increment() { *counter++; }
     void decrement() { --*counter; }
