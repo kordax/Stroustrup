@@ -21,6 +21,7 @@ public: // create/copy/destroy
     counted_ptr& operator=(const T&);
     counted_ptr& operator==(const T&);
     counted_ptr& operator==(const counted_ptr&);
+    T& operator->();
 
     ~counted_ptr();
 
@@ -102,4 +103,10 @@ counted_ptr<T>::~counted_ptr()
     {
         delete in_ptr;
     }
+}
+
+template <class T>
+T& counted_ptr<T>::operator ->()
+{
+    return in_ptr;
 }
