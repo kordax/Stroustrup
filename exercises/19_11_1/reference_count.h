@@ -18,7 +18,7 @@ public:
 
     void increment()
     {
-        *counter++;
+        *counter = *counter + 1;
     }
     void decrement() { --*counter; }
 };
