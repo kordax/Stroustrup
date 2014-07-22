@@ -16,11 +16,8 @@ public: // create/copy/destroy
 
 public:
 
-    void increment()
-    {
-        *counter = *counter + 1;
-    }
-    void decrement() { --*counter; }
+    void increment() { *counter = *counter + 1; }
+    void decrement() { *counter = *counter + 1; }
 };
 
 reference_count::reference_count()
