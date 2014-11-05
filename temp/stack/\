@@ -1,0 +1,63 @@
+#include <iostream>
+#include <malloc.h>
+
+using namespace std;
+
+template <class T>
+class myalloc {
+public:
+	T* allocate(int n);
+	void deallocate(T* p, int n);
+	void construct(T* p, const T& t);
+	void destroy(T* p);
+};
+
+template <class T>
+T* myalloc<T>::allocate(int n)
+{
+	T* p;
+	p = (T*) malloc(n * sizeof(T));
+	return p;
+}
+
+template <class T, class A = myalloc<T> >
+class mystack {
+    public:
+	A myalloc;
+    T* data;
+    unsigned short int size;
+    unsigned short int max_size;
+    
+    mystack() :size(0) {};
+    mystack(unsigned short int sz) : max_size(sz), size(0) {};
+    
+    T& push_back(const T&);
+    
+    T& operator[](int i);
+};
+
+template <class T, class A>
+T& mystack<T, A>::push_back(const T& o)
+{
+	T* p = myalloc.allocate(6);
+	p[size] = o;
+	size++;
+}
+
+template <class T, class A>
+T& mystack<T, A>::operator[](int i)
+{
+    return data[size];
+}
+
+int main()
+{
+	mystack<int> test;
+	int i = 2;
+
+	test.push_back(i);
+
+	cout << test.data[0];
+
+	return 0;
+}
