@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
     else {
         int status;
         waitpid(pid, &status, 0);
+        std::cout << "Child wrote ";
     }
 
 	return 0;
