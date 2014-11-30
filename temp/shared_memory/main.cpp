@@ -1,35 +1,25 @@
-#include <iostream>
-#include <sys/wait.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/file.h>
-#include <sys/mman.h>
-#include <unistd.h>
+#include <allocator.h>
 
-int main(int argc, char *argv[])
+int main()
 {
-	const char *memname = "/mymem";		
-	const size_t region_size = sysconf(_SC_PAGE_SIZE);
-	
-	int fd = shm_open(memname, O_CREAT | O_TRUNC | O_RDWR, 0666); // Создаём область разделяемой памяти
-	int r = ftruncate(fd, region_size); // Распределяем пространство области
-	
-	void *ptr = mmap(0, region_size, PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0);	
+    kordax::shmem_ruler<int> ruler;
+    kordax::frame_s<int> myframe = ruler.to_memory(1, "/mymem");
 
-	close(fd);
+    int *ptr = myframe.addr;
+    *ptr = 1;
 
-	pid_t pid = fork();
+    cout << "I'm parent process! My int is " << *ptr << std::endl;
+
+   pid_t pid = fork();
 
     if (pid == 0) {
-        int *i = (int *) ptr;
-        *i = 300;
-        exit(0);
+        *ptr = *ptr++;
+        std::cout << "I'm child process! My int is " << std::endl;
+        return(0);
     }
     else {
         int status;
         waitpid(pid, &status, 0);
-        std::cout << "Child wrote ";
     }
-
-	return 0;
+    return 0;
 }

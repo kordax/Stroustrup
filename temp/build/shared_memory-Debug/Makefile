@@ -162,7 +162,7 @@ DIST          = /home/Qt/5.4/gcc_64/mkspecs/features/spec_pre.prf \
 		/home/Qt/5.4/gcc_64/mkspecs/features/exceptions.prf \
 		/home/Qt/5.4/gcc_64/mkspecs/features/yacc.prf \
 		/home/Qt/5.4/gcc_64/mkspecs/features/lex.prf \
-		../../../shared_memory/shared_memory.pro  ../../shared_memory/main.cpp
+		../../../shared_memory/shared_memory.pro allocator.h ../../shared_memory/main.cpp
 QMAKE_TARGET  = shared_memory
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = shared_memory
@@ -460,7 +460,7 @@ compiler_clean:
 
 ####### Compile
 
-main.o: ../../shared_memory/main.cpp 
+main.o: ../../shared_memory/main.cpp ../../shared_memory/allocator.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../../shared_memory/main.cpp
 
 ####### Install
