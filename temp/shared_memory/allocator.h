@@ -21,19 +21,21 @@ struct frame_s {
     std::string memn;
     A *addr;
     int quantity;
+    size_t f_size;
 };
 
 template <class A>
 class shmem_ruler {
 public:
-    frame_s<A> to_memory(int n, const std::string);
+    frame_s<A> map(int n, const std::string);
+    void unmap(A* ptr, const size_t f_size);
 
     shmem_ruler() {};
     ~shmem_ruler() {};
 };
 
 template <class A>
-frame_s<A> shmem_ruler<A>::to_memory(int n, const std::string memname)
+frame_s<A> shmem_ruler<A>::map(int n, const std::string memname)
 {
     frame_s<A> frame;
     char *region_name = new char[memname.length() + 1];
@@ -49,19 +51,15 @@ frame_s<A> shmem_ruler<A>::to_memory(int n, const std::string memname)
     frame.fd = fd;
     frame.memn = memname;
     frame.quantity = n;
+    frame.f_size = frame_size;
     close(fd);
 
     return frame;
 }
-/*
-template <class A>
-shmem_ruler<A>::shmem_ruler()
-{
-}
 
 template <class A>
-shmem_ruler<A>::~shmem_ruler()
+void shmem_ruler<A>::unmap(A* ptr, const size_t f_size)
 {
+    if (munmap(ptr, f_size) == 0);
 }
-*/
 }
