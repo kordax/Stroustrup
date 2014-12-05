@@ -17,7 +17,7 @@ int main()
     }
     else {
         int status;
-        *ptr = *ptr++;
+        *ptr = 2;
         std::cout << "I'm child process! My int is " << *ptr << std::endl;
         waitpid(pid, &status, 0);
     }
