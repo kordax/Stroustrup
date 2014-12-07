@@ -27,7 +27,9 @@ struct frame_s {
 template <class A>
 class shmem_ruler {
 public:
-    frame_s<A> map(int n, const std::string);
+    frame_s<A> frame;
+
+    void map(int n, const std::string);
     void unmap(A* ptr, const size_t f_size);
 
     shmem_ruler() {};
@@ -35,9 +37,8 @@ public:
 };
 
 template <class A>
-frame_s<A> shmem_ruler<A>::map(int n, const std::string memname)
+void shmem_ruler<A>::map(int n, const std::string memname)
 {
-    frame_s<A> frame;
     char *region_name = new char[memname.length() + 1];
     strcpy(region_name, memname.c_str());
     const size_t frame_size = sizeof(A) * n;
@@ -54,12 +55,13 @@ frame_s<A> shmem_ruler<A>::map(int n, const std::string memname)
     frame.f_size = frame_size;
     close(fd);
 
-    return frame;
+    return;
 }
 
 template <class A>
 void shmem_ruler<A>::unmap(A* ptr, const size_t f_size)
 {
-    if (munmap(ptr, f_size) == 0);
+    if (munmap(ptr, f_size) != 0) perror("munmap");
+    if (shm_unlink(frame.memn.c_str()) != 0) perror("shm_unlink");
 }
 }
