@@ -14,7 +14,7 @@ int main()
         *ptr = 2;
         std::cout << "I'm child process! My int is " << *ptr << std::endl;
         std::cout << "My PID is: " << getpid() << " and my fork returned value is: " << pid << std::endl;
-        return(0);
+        exit(0);
     }
     else { //
         int status;
